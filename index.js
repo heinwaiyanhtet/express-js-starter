@@ -7,15 +7,11 @@ var app = express();
 app.set('view engine','pug');
 app.set('views','./views');
 
-
-
 var things = require('./things.js');
 
 app.use(function(req,res,next){
-
     console.log("A new request received at " + Date.now());
     next();
-
 });
 
 
@@ -48,7 +44,7 @@ app.post('/', function(req, res){
     res.send("recieved your request!");
  });
 
- 
+
 app.post('/hello',function(req,res){
     res.send("Hello World!");
 })
