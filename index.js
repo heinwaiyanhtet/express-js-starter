@@ -31,12 +31,28 @@ app.get('/first_template',function(req,res){
 
 app.use(express.static('public'));
 
-app.get('/',function (req,res) {
-    // res.send("hello world!");
+app.get('/', (req, res, next) => {
+    setTimeout(() => {
+      try {
+        throw new Error('BROKEN')
+      } catch (err) {
+        next(err)
+      }
+    }, 5000)
+  })
 
-    res.render('form');
 
-})
+  
+
+// app.locals.domain = "https://www.google.com";
+// app.locals.name = "hein wai yan htet";
+
+// console.log(app.locals);
+
+// app.get('/',function (req,res) {
+//     // res.send("hello world!");
+//     res.render('first_view');
+// })
 
 
 app.post('/', function(req, res){
