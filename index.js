@@ -2,7 +2,23 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var upload = multer();
+
 var app = express();
+const admin = express();
+
+
+admin.on('mount',function (parent) {
+    console.log("Admin mounted");
+})
+
+admin.get('/', function (req, res) {
+    res.send('Admin Homepage');
+});
+
+app.use('/admin', admin);
+
+
+
 
 app.set('view engine','pug');
 app.set('views','./views');
@@ -31,18 +47,18 @@ app.get('/first_template',function(req,res){
 
 app.use(express.static('public'));
 
-app.get('/', (req, res, next) => {
-    setTimeout(() => {
-      try {
-        throw new Error('BROKEN')
-      } catch (err) {
-        next(err)
-      }
-    }, 5000)
-  })
+// app.get('/', (req, res, next) => {
+//     setTimeout(() => {
+//       try {
+//         throw new Error('BROKEN')
+//       } catch (err) {
+//         next(err)
+//       }
+//     }, 5000)
+//   })
 
 
-  
+
 
 // app.locals.domain = "https://www.google.com";
 // app.locals.name = "hein wai yan htet";
