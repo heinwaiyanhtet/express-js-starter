@@ -1,11 +1,16 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer');
+const cookieParser = require('cookie-parser');
+
 var upload = multer();
-
 var app = express();
-const admin = express();
 
+
+
+// multiple mounted
+
+const admin = express();
 
 admin.on('mount',function (parent) {
     console.log("Admin mounted");
@@ -17,9 +22,35 @@ admin.get('/', function (req, res) {
 
 app.use('/admin', admin);
 
+app.use(cookieParser());
+
+app.get("/user-cookie",function (req,res) {
+    req.cookies.name = "Gourav";
+    req.cookies.age  = 12;
+
+    console.log(req.cookies);
+    res.send();
+})
+
+app.get("/req-fresh",function (req , res) {
+    console.log(req.fresh);
+})
+//  user
+const user = express.Router();
+
+user.get("/login",function (req,res) {
+
+    console.log(req.baseUrl);
+    res.end();
+
+})
+
+app.use('/user',user);
 
 
 
+
+// view engine
 app.set('view engine','pug');
 app.set('views','./views');
 
